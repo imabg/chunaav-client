@@ -25,6 +25,7 @@ const AdminLogin = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Sending the ADMIN_LOGIN_REQUEST
     props.adminLogin({ username, password });
   };
 
