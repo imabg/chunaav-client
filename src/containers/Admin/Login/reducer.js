@@ -1,11 +1,13 @@
-import { ADMIN_LOGIN_SUCCESSFULLY } from "./types";
-const initalState = {data: {}, isLogin: false};
+import { ADMIN_LOGIN_SUCCESSFULLY, ADMIN_DETAILS_SUCCESS } from "./types";
+const initalState = { admin: {}, isLogin: false, data: {} };
 
 const adminLoginReducer = (state = initalState, action) => {
-  const response = action.admin;
+  const response = action;
   switch (action.type) {
     case ADMIN_LOGIN_SUCCESSFULLY:
-      return { ...state, data: response.data, isLogin: true };
+      return { ...state, admin: response.admin.data._id, isLogin: true };
+    case ADMIN_DETAILS_SUCCESS:
+      return { ...state, data: response.adminDetails.data };
     default:
       return state;
   }
