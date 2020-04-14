@@ -39,3 +39,34 @@ export const fetchVoterInfo = async (aadhar_num) => {
     return error;
   }
 };
+
+export const uploadVoterImage = async (params) => {
+  try {
+    let adminToken = localStorage.getItem("admin_token");
+    let adminConfig = {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    };
+    const { image, id } = params;
+    const imageRes = await axios.post(
+      `${URL}/api/admin/upload/voter?id=${id}`,
+      image,
+      adminConfig
+    );
+    return imageRes;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addVoterRequest = async (voter) => {
+  try {
+    let adminToken = localStorage.getItem("admin_token");
+    let adminConfig = {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    };
+    const v = await axios.post(`${URL}/api/admin/addVoter`, voter, adminConfig);
+    return v;
+  } catch (error) {
+    return error;
+  }
+};
