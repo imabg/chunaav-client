@@ -16,7 +16,7 @@ export default function ButtonAppBar(props) {
           <Link to="/admin/voters" className="ml-4 text-white">
             VOTER
           </Link>
-          <Link to="/admin/candidate" className="ml-4 text-white">
+          <Link to="/admin/candidates" className="ml-4 text-white">
             CANDIDATE
           </Link>
         </Toolbar>
