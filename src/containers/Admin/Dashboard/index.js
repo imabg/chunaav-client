@@ -1,15 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import ButtonAppBar from "./navbar";
 
-import { Button } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 
 const Dashboard = (props) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const logoutAdmin = () => {
+    localStorage.removeItem("admin");
+    localStorage.removeItem("admin_time");
+    props.history.push("/admin/login");
+  };
   return (
     <div>
       <ButtonAppBar />
-      <div className="alert alert-danger mt-2 text-center" role="alert">
-        ⚠ Don't refresh the Page
+      <div className="text-right mr-4 my-4">
+        <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+          LOGOUT
+        </Button>
       </div>
       <div className="jumbotron container mt-2">
         <h1 className="display-4">Welcome,{props.adminData.username} 🌲</h1>
@@ -27,6 +51,30 @@ const Dashboard = (props) => {
           Result
         </Button>
       </div>
+      {open ? (
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">
+            {`Logout  from ${props.adminData.username} ⚠?`}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Do you want to logout from the system 🤔?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={logoutAdmin} color="primary" autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      ) : null}
     </div>
   );
 };
@@ -37,8 +85,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchToProps = {
-//   adminDetails,
-// };
 
 export default connect(mapStateToProps)(Dashboard);
