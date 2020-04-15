@@ -19,16 +19,16 @@ export const addVoter = (voterInfo) => {
   };
 };
 
-// export const updateVoter = (params) => {
-//   return {
-//     type: UPDATE_VOTER_REQUESTED,
-//     payload: params,
-//   };
-// };
+export const updateVoter = (params) => {
+  return {
+    type: UPDATE_VOTER_REQUESTED,
+    payload: params,
+  };
+};
 
-// export const deleteVoter = (id) => {
-//   return {
-//     type: DELETE_VOTER_REQUESTED,
-//     payload: id,
-//   };
-// };
+export const deleteVoter = (id) => {
+  return {
+    type: DELETE_VOTER_REQUESTED,
+    payload: id,
+  };
+};
