@@ -44,12 +44,14 @@ export const uploadVoterImage = async (params) => {
   try {
     let adminToken = localStorage.getItem("admin_token");
     let adminConfig = {
-      headers: { Authorization: `Bearer ${adminToken}` },
+      headers: {
+        Authorization: `Bearer ${adminToken}`,
+      },
     };
-    const { image, id } = params;
+    const { img, id } = params;
     const imageRes = await axios.post(
       `${URL}/api/admin/upload/voter?id=${id}`,
-      image,
+      img,
       adminConfig
     );
     return imageRes;
@@ -66,6 +68,40 @@ export const addVoterRequest = async (voter) => {
     };
     const v = await axios.post(`${URL}/api/admin/addVoter`, voter, adminConfig);
     return v;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateVoterRequest = async (params) => {
+  try {
+    let adminToken = localStorage.getItem("admin_token");
+    let adminConfig = {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    };
+    const { id, voter } = params;
+    const update = await axios.put(
+      `${URL}/api/admin/updateVoter?id=${id}`,
+      voter,
+      adminConfig
+    );
+    return update;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteVoterRequest = async (id) => {
+  try {
+    let adminToken = localStorage.getItem("admin_token");
+    let adminConfig = {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    };
+    const deleteVoter = await axios.delete(
+      `${URL}/api/admin/deleteVoter`,
+      adminConfig
+    );
+    return deleteVoter;
   } catch (error) {
     return error;
   }
