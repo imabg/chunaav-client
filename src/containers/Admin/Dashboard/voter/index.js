@@ -1,18 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  TextField,
-  Card,
-  Typography,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import { fetchVoterInfo, addVoter, updateVoter, deleteVoter } from "../action";
@@ -20,6 +7,9 @@ import ButtonAppBar from "../navbar";
 
 import CustomModal from "../../../../components/modal";
 import CustomForm from "../../../../components/form";
+
+import CnfrmDialog from "./CnfrmDialog";
+import VoterDetails from "./VoterDetails";
 
 const Voter = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -141,7 +131,7 @@ const Voter = (props) => {
 
   return (
     <>
-      <ButtonAppBar/>
+      <ButtonAppBar />
       <div className="container mt-4">
         <div className="text-center">
           <Button
@@ -161,79 +151,10 @@ const Voter = (props) => {
           </Button>
         </div>
         {props.voter.name ? (
-          <div>
-            <div className="text-right mt-4">
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={handleUpdateBtn}
-              >
-                UPDATE Voter
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                disableElevation
-                className="mx-4"
-                onClick={handleDialogOpen}
-              >
-                DELETE Voter
-              </Button>
-            </div>
-            <div className="container mt-4">
-              <Typography variant="h4" component="h3">
-                Voter details:{" "}
-              </Typography>
-              <Card>
-                <CardActionArea>
-                  <CardMedia
-                    image="/static/images/cards/contemplative-reptile.jpg"
-                    title="Contemplative Reptile"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Name:{" "}
-                      <span className="text-primary">{props.voter.name}</span>
-                    </Typography>
-                    <Typography variant="h5" component="p">
-                      Father Name:{" "}
-                      <span className="text-primary">{props.voter.fname}</span>
-                    </Typography>
-                    {props.voter.email ? (
-                      <Typography variant="h5" component="p">
-                        Email:{" "}
-                        <span className="text-primary">
-                          {props.voter.email}
-                        </span>
-                      </Typography>
-                    ) : null}
-                    <Typography variant="h5" component="p">
-                      Aadhar number:{" "}
-                      <span className="text-primary">
-                        {props.voter.aadhar_num}
-                      </span>
-                    </Typography>
-                    <Typography variant="h5" component="p">
-                      Phone number:{" "}
-                      <span className="text-primary">
-                        {props.voter.phone_num}
-                      </span>
-                    </Typography>
-                    <Typography variant="h5" component="p">
-                      City:{" "}
-                      <span className="text-primary">{props.voter.city}</span>
-                    </Typography>
-                    <Typography variant="h5" component="p">
-                      Ward number:{" "}
-                      <span className="text-primary">
-                        {props.voter.ward_num}
-                      </span>
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </div>
-          </div>
+          <VoterDetails
+            handleUpdateBtn={handleUpdateBtn}
+            handleDialogOpen={handleDialogOpen}
+          />
         ) : null}
 
         {modalIsOpen ? (
@@ -370,7 +291,7 @@ const Voter = (props) => {
                       onChange={(e) => {
                         setWard(e.target.value);
                         // TODO: proper field checking
-                          setDisabledBtn(false);
+                        setDisabledBtn(false);
                       }}
                     />
                   </div>
@@ -392,32 +313,11 @@ const Voter = (props) => {
           </CustomModal>
         ) : null}
         {open ? (
-          <>
-            <Dialog
-              open={open}
-              onClose={handleDialogClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                {"Do you really want to delete the voter?"}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  By deleting the voter, he/she will not be able to cast the
-                  vote.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleDialogClose} color="primary">
-                  Disagree
-                </Button>
-                <Button onClick={deleteVoterHandler} color="primary" autoFocus>
-                  Agree
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </>
+          <CnfrmDialog
+            open={open}
+            handleDialogClose={handleDialogClose}
+            deleteVoterHandler={deleteVoterHandler}
+          />
         ) : null}
       </div>
     </>
