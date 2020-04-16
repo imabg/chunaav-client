@@ -24,7 +24,7 @@ const Dashboard = (props) => {
 
   const logoutAdmin = () => {
     localStorage.removeItem("admin");
-    localStorage.removeItem("admin_time");
+    localStorage.removeItem("admin_token");
     props.history.push("/admin/login");
   };
   return (
