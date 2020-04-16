@@ -98,10 +98,79 @@ export const deleteVoterRequest = async (id) => {
       headers: { Authorization: `Bearer ${adminToken}` },
     };
     const deleteVoter = await axios.delete(
-      `${URL}/api/admin/deleteVoter`,
+      `${URL}/api/admin/deleteVoter?id=${id}`,
       adminConfig
     );
     return deleteVoter;
+  } catch (error) {
+    return error;
+  }
+};
+
+// Candidates
+
+export const fetchCandidateRequest = async (id) => {
+  try {
+    let adminToken = localStorage.getItem("admin_token");
+    let adminConfig = {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    };
+    const fetchCand = await axios.get(
+      `${URL}/api/admin/candidate/details?id=${id}`,
+      adminConfig
+    );
+    return fetchCand.data
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addCandidateRequest = async (candidate) => {
+  try {
+    let adminToken = localStorage.getItem("admin_token");
+    let adminConfig = {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    };
+    const addCand = await axios.post(
+      `${URL}/api/admin/addCandidate`,
+      candidate,
+      adminConfig
+    );
+    return addCand.data
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateCandidateRequest = async (params) => {
+  try {
+    let adminToken = localStorage.getItem("admin_token");
+    let adminConfig = {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    };
+    const { id, candidate } = params;
+    const updateCand = await axios.put(
+      `${URL}/api/admin/updateCandidate?id=${id}`,
+      candidate,
+      adminConfig
+    );
+    return updateCand;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteCandidateRequest = async (id) => {
+  try {
+    let adminToken = localStorage.getItem("admin_token");
+    let adminConfig = {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    };
+    const deleteCand = await axios.delete(
+      `${URL}/api/admin/deleteCandidate?id=${id}`,
+      adminConfig
+    );
+    return deleteCand;
   } catch (error) {
     return error;
   }
