@@ -1,19 +1,19 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRouteVoter = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={(props) =>
-        localStorage.getItem("admin_token") ? (
+        localStorage.getItem("voter_token") ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/admin/login" />
+          <Redirect to="/" />
         )
       }
     />
   );
 };
 
-export default PrivateRoute;
+export default PrivateRouteVoter;
