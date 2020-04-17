@@ -3,7 +3,7 @@ import {
   VERIFY_OTP_REQUESTED,
   VOTING_SCREEN_REQUESTED,
   RESEND_OTP_REQUESTED,
-  // CAST_VOTE_REQUESTED,
+  CAST_VOTE_REQUESTED,
 } from "./types";
 
 export const loginVoter = (credentials) => {
@@ -35,12 +35,12 @@ export const fetchVotingScreen = (params) => {
   };
 };
 
-// export const castVote = (vote) => {
-//   return {
-//     type: CAST_VOTE_REQUESTED,
-//     payload: vote,
-//   };
-// };
+export const castVote = (votes) => {
+  return {
+    type: CAST_VOTE_REQUESTED,
+    payload: votes,
+  };
+};
 
 export const voterSession = () => {
   return {
