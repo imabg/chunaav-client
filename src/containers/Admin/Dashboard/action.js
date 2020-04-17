@@ -66,3 +66,9 @@ export const deleteCandidate = (id) => {
     payload: id
   }
 }
+
+export const adminLogout = () => {
+  return {
+    type: "ADMIN_LOGOUT"
+  }
+}

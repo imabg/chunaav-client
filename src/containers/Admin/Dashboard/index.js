@@ -11,6 +11,8 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 
+import { adminLogout } from "./action";
+
 const Dashboard = (props) => {
   const [open, setOpen] = useState(false);
 
@@ -25,6 +27,7 @@ const Dashboard = (props) => {
   const logoutAdmin = () => {
     localStorage.removeItem("admin");
     localStorage.removeItem("admin_token");
+    props.adminLogout();
     props.history.push("/admin/login");
   };
   return (
@@ -85,5 +88,8 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = {
+  adminLogout,
+};
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
