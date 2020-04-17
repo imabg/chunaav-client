@@ -22,7 +22,7 @@ const Voter = (props) => {
   // ADD new Voter
   const [name, setName] = useState("");
   const [fname, setFname] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(null);
   const [phone_num, setPhone] = useState("");
   const [ward_num, setWard] = useState("");
   const [city, setCity] = useState("");
@@ -75,15 +75,28 @@ const Voter = (props) => {
   };
 
   const saveNewVoter = () => {
-    const voter = {
-      name,
-      aadhar_num,
-      fname,
-      email,
-      phone_num,
-      ward_num,
-      city,
-    };
+    let voter;
+    if (email !== null) {
+      voter = {
+        name,
+        aadhar_num,
+        fname,
+        email,
+        phone_num,
+        ward_num,
+        city,
+      };
+    } else {
+      voter = {
+        name,
+        aadhar_num,
+        fname,
+        phone_num,
+        ward_num,
+        city,
+      };
+    }
+
     const img = image;
     props.addVoter({ voter, img });
     setModalIsOpen(false);
