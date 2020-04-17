@@ -204,13 +204,13 @@ export const generateVotingScreenRequest = async (screenInfo) => {
   }
 };
 
-export const castVoteRequest = async (vote) => {
+export const castVoteRequest = async (votes) => {
   try {
     let voterToken = localStorage.getItem("voter_token");
     let voterConfig = {
       headers: { Authorization: `Bearer ${voterToken}` },
     };
-    const v = await axios.post(`${URL}/api/vote`, vote, voterConfig);
+    const v = await axios.post(`${URL}/api/vote`, votes, voterConfig);
     return v.data;
   } catch (error) {
     return error;
