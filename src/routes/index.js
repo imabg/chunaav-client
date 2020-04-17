@@ -28,7 +28,7 @@ const CustomRoutes = () => {
       <Route path="/" exact component={VoterLogin} />
       <PrivateRouteVoter path="/otp" exact component={OTP} />
       <PrivateRouteVoter path="/screen" exact component={VotingScreen} />
-      <PrivateRouteVoter path="/thankU" exact component={ThankU} /> 
+      <Route path="/thankU" exact component={ThankU} /> 
       <Route component={NoMatch} />
     </Switch>
   );
