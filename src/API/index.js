@@ -119,7 +119,7 @@ export const fetchCandidateRequest = async (id) => {
       `${URL}/api/admin/candidate/details?id=${id}`,
       adminConfig
     );
-    return fetchCand.data
+    return fetchCand.data;
   } catch (error) {
     return error;
   }
@@ -136,7 +136,7 @@ export const addCandidateRequest = async (candidate) => {
       candidate,
       adminConfig
     );
-    return addCand.data
+    return addCand.data;
   } catch (error) {
     return error;
   }
@@ -171,6 +171,77 @@ export const deleteCandidateRequest = async (id) => {
       adminConfig
     );
     return deleteCand;
+  } catch (error) {
+    return error;
+  }
+};
+
+// VOTER
+
+export const loginVoterRequest = async (credentials) => {
+  try {
+    const voter = await axios.post(`${URL}/api/login`, credentials);
+    return voter.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const generateVotingScreenRequest = async (screenInfo) => {
+  try {
+    let voterToken = localStorage.getItem("voter_token");
+    let voterConfig = {
+      headers: { Authorization: `Bearer ${voterToken}` },
+    };
+    const {city, ward_num} = screenInfo
+    const screen = await axios.get(
+      `${URL}/api/screen?city=${city}&ward=${ward_num}`,
+      voterConfig
+    );
+    return screen.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const castVoteRequest = async (vote) => {
+  try {
+    let voterToken = localStorage.getItem("voter_token");
+    let voterConfig = {
+      headers: { Authorization: `Bearer ${voterToken}` },
+    };
+    const v = await axios.post(`${URL}/api/vote`, vote, voterConfig);
+    return v.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const verifyOTPRequest = async (params) => {
+  try {
+    let voterToken = localStorage.getItem("voter_token");
+    let voterConfig = {
+      headers: { Authorization: `Bearer ${voterToken}` },
+    };
+    const { id, OTP } = params;
+    const otp = await axios.get(
+      `${URL}/verify/otp?id=${id}&o=${OTP}`,
+      voterConfig
+    );
+    return otp;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const resendOTPRequest = async (id) => {
+  try {
+    let voterToken = localStorage.getItem("voter_token");
+    let voterConfig = {
+      headers: { Authorization: `Bearer ${voterToken}` },
+    };
+    const newOtp = await axios.get(`${URL}/resend/otp?id=${id}`, voterConfig);
+    return newOtp;
   } catch (error) {
     return error;
   }
