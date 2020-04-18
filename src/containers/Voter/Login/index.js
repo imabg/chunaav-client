@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import {loginVoter} from "../actions"
+import { loginVoter } from "../actions";
 import {
   TextField,
   Button,
@@ -9,7 +9,6 @@ import {
   CardActions,
   CardContent,
 } from "@material-ui/core";
-
 
 const Login = (props) => {
   const [aadhar_num, setAadharNum] = useState("");
@@ -34,10 +33,15 @@ const Login = (props) => {
   });
 
   return (
-    <div className="container mt-4 mx-auto text-center" id="recaptcha-container">
+    <div className="container mt-4 mx-auto text-center">
       <Typography variant="h4">
         Welcome to The chunaav: The advanced and secure voting system
       </Typography>
+      {props.showError ? (
+        <div className="alert alert-danger" role="alert">
+          {props.message}
+        </div>
+      ) : null}
       <Card variant="elevation" className="mt-4">
         <CardContent>
           <Typography variant="h5">
@@ -72,7 +76,7 @@ const Login = (props) => {
             </div>
             <CardActions className="justify-content-center">
               <Button
-                id='sign-in-button'
+                id="sign-in-button"
                 variant="outlined"
                 color="primary"
                 type="submit"
@@ -91,6 +95,8 @@ const Login = (props) => {
 
 const mapStateToProps = (state) => ({
   loginStage: state.voter.loginStage,
+  showError: state.voter.error,
+  message: state.voter.errorMsg,
 });
 
 const mapDispatchToProps = {

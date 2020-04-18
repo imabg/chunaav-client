@@ -8,20 +8,14 @@ import {
   Card,
   CardActions,
   CardContent,
-  Snackbar,
 } from "@material-ui/core";
 
-import { verifyOTP, resendOTP } from "../actions";
+import { verifyOTP, resendOTP, removeError } from "../actions";
 
 const OTP = (props) => {
   const [otp, setOtp] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
-  const [open, setOpen] = React.useState(false);
   const [resendOTPBtn, setResendOTPBtn] = useState(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   useEffect(() => {
     if (otp.trim() && otp.length === 5) {
@@ -35,19 +29,14 @@ const OTP = (props) => {
     setResendOTPBtn(false);
     e.preventDefault();
     props.verifyOTP({ id: props.voter._id, OTP: otp });
-    if (props.verified) {
-      props.history.push("/screen");
-    } else {
-      setOpen(true);
-      setOtp("");
-    }
   };
 
   useEffect(() => {
     if (props.verified) {
       props.history.push("/screen");
     }
-  },[]);
+  });
+
   const handleResendOTP = () => {
     if (props.ResendOTP === 2) {
       setResendOTPBtn(true);
@@ -57,16 +46,11 @@ const OTP = (props) => {
   };
   return (
     <div className="container text-center mt-4">
-      <Snackbar
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        message="OTP is incorrect"
-      />
+      {props.showError ? (
+        <div className="alert alert-danger" role="alert">
+          {props.message}
+        </div>
+      ) : null}
 
       <Typography variant="h5" className="mb-4">
         Welcome to The chunaav: The advanced and secure voting system
@@ -122,12 +106,15 @@ const mapStateToProps = (state) => {
     verified: state.voter.OTPVerify,
     voter: state.voter.details,
     ResendOTP: state.resendOTP,
+    showError: state.voter.error,
+    message: state.voter.errorMsg,
   };
 };
 
 const mapDispatchToProps = {
   verifyOTP,
   resendOTP,
+  removeError,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OTP);
