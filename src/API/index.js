@@ -183,7 +183,7 @@ export const loginVoterRequest = async (credentials) => {
     const voter = await axios.post(`${URL}/api/login`, credentials);
     return voter.data;
   } catch (error) {
-    return error;
+    throw new Error(error.response.data.err);
   }
 };
 
@@ -193,14 +193,14 @@ export const generateVotingScreenRequest = async (screenInfo) => {
     let voterConfig = {
       headers: { Authorization: `Bearer ${voterToken}` },
     };
-    const {city, ward_num} = screenInfo
+    const { city, ward_num } = screenInfo;
     const screen = await axios.get(
       `${URL}/api/screen?city=${city}&ward=${ward_num}`,
       voterConfig
     );
     return screen.data;
   } catch (error) {
-    return error;
+    throw new Error(error.response.data.err);
   }
 };
 
@@ -213,7 +213,7 @@ export const castVoteRequest = async (votes) => {
     const v = await axios.post(`${URL}/api/vote`, votes, voterConfig);
     return v.data;
   } catch (error) {
-    return error;
+    throw new Error(error.response.data.err);
   }
 };
 
@@ -230,7 +230,7 @@ export const verifyOTPRequest = async (params) => {
     );
     return otp;
   } catch (error) {
-    return error;
+    throw new Error(error.response.data.err);
   }
 };
 
@@ -243,6 +243,6 @@ export const resendOTPRequest = async (id) => {
     const newOtp = await axios.get(`${URL}/resend/otp?id=${id}`, voterConfig);
     return newOtp;
   } catch (error) {
-    return error;
+    throw new Error(error.response.data.err);
   }
 };
