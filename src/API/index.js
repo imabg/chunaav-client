@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
+const URL = `http://13.127.251.242:${process.env.REACT_APP_SERVER_PORT}`;
 
 export const loginAdmin = async (credentials) => {
   try {
