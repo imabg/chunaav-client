@@ -10,9 +10,8 @@ Chunaav frontend:
 3. Redux-saga
 4. Material-UI
 5. Bootstrap@4.4.1
-6. React-loader
+6. Formik
 
 
 `@abhay676`
 ---
-
