@@ -9,9 +9,9 @@ import {
   VOTING_SCREEN_SUCCESSFULLY,
   CAST_VOTE_REQUESTED,
   CAST_VOTE_SUCCESSFULLY,
-  VERIFY_OTP_FAILED,
   VERIFY_OTP_SUCCESSFULLY,
   VERIFY_OTP_REQUESTED,
+  SHOW_ERROR,
 } from "./types";
 
 import {
@@ -25,9 +25,13 @@ import {
 function* loginVoter(action) {
   try {
     const voter = yield call(loginVoterRequest, action.payload);
-    yield put({ type: LOGIN_SUCCESSFULLY, voter });
+    if (voter.success) {
+      yield put({ type: LOGIN_SUCCESSFULLY, voter });
+      yield put({type: "CLEAR_ERROR"})
+    }
   } catch (error) {
-    console.log(error);
+    const err = error.message;
+    yield put({ type: SHOW_ERROR, err });
   }
 }
 
@@ -35,13 +39,15 @@ function* loginVoter(action) {
 function* verifyOTP(action) {
   try {
     const verify = yield call(verifyOTPRequest, action.payload);
-    if (verify.data.success) {
-      yield put({ type: VERIFY_OTP_SUCCESSFULLY, verify });
-    } else {
-      yield put({ type: VERIFY_OTP_FAILED });
-    }
+    yield put({ type: VERIFY_OTP_SUCCESSFULLY, verify });
   } catch (error) {
-    console.log(error);
+    let err;
+    if(error.code) {
+     err = error.message;
+    } else {
+      err = "Sorry! you refresh the page. Please contact the ADMIN."
+    }
+    yield put({ type: SHOW_ERROR, err });
   }
 }
 
@@ -49,10 +55,10 @@ function* verifyOTP(action) {
 function* resendOTP(action) {
   try {
     const otp = yield call(resendOTPRequest, action.payload);
-    console.log("Resend OTP->",otp)
     yield put({ type: RESEND_OTP_SUCCESSFULLY, otp });
   } catch (error) {
-    console.log(error);
+    const err = error.message;
+    yield put({ type: SHOW_ERROR, err });
   }
 }
 
@@ -61,7 +67,8 @@ function* generateVotingScreen(action) {
     const screen = yield call(generateVotingScreenRequest, action.payload);
     yield put({ type: VOTING_SCREEN_SUCCESSFULLY, screen });
   } catch (error) {
-    console.log(error);
+    const err = error.message;
+    yield put({ type: SHOW_ERROR, err });
   }
 }
 
@@ -70,7 +77,8 @@ function* casteVote(action) {
     const vote = yield call(castVoteRequest, action.payload);
     yield put({ type: CAST_VOTE_SUCCESSFULLY, vote });
   } catch (error) {
-    console.log(error);
+    const err = error.message;
+    yield put({ type: SHOW_ERROR, err });
   }
 }
 

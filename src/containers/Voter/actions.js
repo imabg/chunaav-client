@@ -47,3 +47,9 @@ export const voterSession = () => {
     type: "VOTER_SESSION_OUT",
   };
 };
+
+export const removeError = () => {
+  return {
+    type: "CLEAR_ERROR"
+  }
+}
