@@ -108,6 +108,14 @@ const Candidate = (props) => {
     const img = image;
     props.addCandidate({ candidate, img });
     setModalIsOpen(false);
+    setName("");
+    setFname("");
+    setEmail("");
+    setAadharNum("");
+    setPhone("");
+    setCity("");
+    setWard("");
+    setPosition("")
   };
 
   const handleUpdateBtn = () => {
@@ -121,7 +129,7 @@ const Candidate = (props) => {
       setAadharNum(props.candidate.aadhar_num);
       setPhone(props.candidate.phone_num);
       setCity(props.candidate.city);
-      setWard(props.candidate.ward_num);
+      setWard(props.candidate.ward_num); 
       setDisabledBtn(false);
     }
   };

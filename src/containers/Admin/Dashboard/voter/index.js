@@ -100,6 +100,13 @@ const Voter = (props) => {
     const img = image;
     props.addVoter({ voter, img });
     setModalIsOpen(false);
+    setName("");
+    setFname("");
+    setEmail("");
+    setAadharNum("");
+    setPhone("");
+    setCity("");
+    setWard("");
   };
 
   const handleUpdateBtn = () => {
